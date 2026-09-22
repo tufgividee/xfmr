@@ -12,8 +12,6 @@ dec_en = tokenizer.decode(enc_en.ids)
 print(txt_en)
 print(enc_en.ids)
 print(enc_en.tokens)
-print()
-
 
 enc_de = tokenizer.encode(txt_de)
 dec_de = tokenizer.decode(enc_de.ids)
