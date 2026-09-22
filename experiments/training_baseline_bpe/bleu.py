@@ -48,13 +48,15 @@ def evaluate_bleu(source_file, target_file):
 
     hypotheses = []
 
-    for i, source in enumerate(sources):
-        target = detokenize(translator.translate(source))
+    for i, (source, reference) in enumerate(zip(sources, references)):
+        reference = detokenize(reference).lower()
+        target = detokenize(translator.translate(source)).lower()
         hypotheses.append(target)
 
         if (i + 1) % 100 == 0:
-            print("prompt: " + source)
-            print("response: " + target)
+            print("prompt:    " + source)
+            print("reference: " + reference)
+            print("response:  " + target)
             print(f"Translated {i + 1}/{len(sources)}")
 
 
@@ -64,6 +66,13 @@ def evaluate_bleu(source_file, target_file):
         [references],
     )
 
+
+train_bleu = evaluate_bleu(
+    data_dir / "train.en",
+    data_dir / "train.de",
+)
+
+print(f"\nTrain BLEU: {train_bleu.score:.2f}")
 
 val_bleu = evaluate_bleu(
     data_dir / "val.en",

@@ -2,6 +2,7 @@ from pathlib import Path
 
 import torch
 from tokenizers import Tokenizer
+from tokenizers.decoders import BPEDecoder, WordPiece
 from tokenizers.models import BPE
 from tokenizers.normalizers import Lowercase
 from tokenizers.pre_tokenizers import Whitespace
@@ -18,9 +19,16 @@ RAW_DIR = SCRIPT_DIR.parent / "raw"
 
 
 def setup_tokenizer() -> Tokenizer:
-    tokenizer = Tokenizer(BPE(unk_token="[UNK]"))
+    tokenizer = Tokenizer(
+        BPE(
+            unk_token="[UNK]",
+            continuing_subword_prefix="##",
+        )
+    )
     tokenizer.normalizer = Lowercase()
     tokenizer.pre_tokenizer = Whitespace()
+    # tokenizer.decoder = BPEDecoder(suffix="##")
+    tokenizer.decoder = WordPiece(prefix="##")
     return tokenizer
 
 
@@ -53,6 +61,7 @@ def make_tokenizer() -> Tokenizer:
         special_tokens=["[UNK]", "[PAD]", "[SOS]", "[EOS]"],
         vocab_size=8000,
         min_frequency=2,
+        continuing_subword_prefix="##",
     )
 
     print("Training shared BPE vocabulary on train.en + train.de...")
