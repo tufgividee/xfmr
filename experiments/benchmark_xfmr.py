@@ -57,6 +57,8 @@ class TorchTransformer(nn.Module):
         # Match the custom Transformer.
         self.fc_out.weight = self.decoder_embedding.weight
 
+        self.dropout = nn.Dropout(dropout)
+
     def forward(self, src, tgt):
         src_key_padding_mask = (
             src == self.src_pad_idx
@@ -68,11 +70,11 @@ class TorchTransformer(nn.Module):
 
         src = self.encoder_embedding(src)
         src = src * self.embedding_scale
-        src = self.positional_encoding(src)
+        src = self.dropout(self.positional_encoding(src))
 
         tgt = self.decoder_embedding(tgt)
         tgt = tgt * self.embedding_scale
-        tgt = self.positional_encoding(tgt)
+        tgt = self.dropout(self.positional_encoding(tgt))
 
         # tgt_mask = nn.Transformer.generate_square_subsequent_mask(
         #     tgt.size(1),

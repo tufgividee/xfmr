@@ -65,7 +65,8 @@ class Encoder(nn.Module):
 class Decoder(nn.Module):
     def __init__(self, d_model, num_heads, d_ff, num_layers, dropout):
         super().__init__()
-        self.layers = nn.ModuleList([DecoderLayer(d_model, num_heads, d_ff, dropout) for _ in range(num_layers)])
+        self.layers = nn.ModuleList([DecoderLayer(d_model, num_heads, d_ff, dropout) 
+                                     for _ in range(num_layers)])
 
     def forward(self, x, enc_output, src_mask, tgt_mask):
         for layer in self.layers:

@@ -8,7 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from data.multi30k.tok_wordlevel_data_build_hf.detokenizer import detokenize
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from exp_xfmr2017 import load_exp_for_infer
+from benchmark_xfmr import TorchTransformer
+from exp_helper import load_exp_for_infer
 
 experiment_dir = Path(__file__).resolve().parent
 project_dir = experiment_dir.parents[1]
@@ -21,6 +22,7 @@ translator, config = load_exp_for_infer(
     checkpoint_name=checkpoint_name,
     weights_name=weights_name,
     is_compile=False,
+    model_class=TorchTransformer
 )
 
 data_dir = project_dir / cfg.CONFIG["raw_data_dir"]
