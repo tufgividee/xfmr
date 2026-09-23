@@ -26,19 +26,19 @@ CONFIG = {
     "learning_rate": 1e-4,
     "epochs": 2,
 
-    # Model # for a local test run
-    "d_model": 128,
-    "num_heads": 8,
-    "num_layers": 6,
-    "d_ff": 512,
-    "dropout": 0.1,
-
-    # # Model # actual remote train
-    # "d_model": 512,
+    # # Model # for a local test run
+    # "d_model": 128,
     # "num_heads": 8,
     # "num_layers": 6,
-    # "d_ff": 2048,
+    # "d_ff": 512,
     # "dropout": 0.1,
+
+    # Model # actual remote train
+    "d_model": 512,
+    "num_heads": 8,
+    "num_layers": 6,
+    "d_ff": 2048,
+    "dropout": 0.1,
 
     # Optimizer
     "optimizer": "Adam",
