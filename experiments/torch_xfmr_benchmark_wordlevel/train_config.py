@@ -24,7 +24,7 @@ CONFIG = {
     # Training
     "batch_size": 32,
     "learning_rate": 1e-4,
-    "epochs": 2,
+    "epochs": 50,
 
     # # Model # for a local test run
     # "d_model": 128,
