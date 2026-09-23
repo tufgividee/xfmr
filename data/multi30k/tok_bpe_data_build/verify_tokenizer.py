@@ -111,3 +111,14 @@ print(tokenizer.post_processor)
 
 print(tokenizer.decode(enc_en.ids))
 print(tokenizer.decode(enc_en.ids, skip_special_tokens=True))
+
+
+print("added littes test to see tokernizer behavior")
+
+text = "demonstranten"
+
+enc = tokenizer.encode(text)
+
+print("IDs:    ", enc.ids)
+print("Tokens: ", enc.tokens)
+print("Decoded:", tokenizer.decode(enc.ids))

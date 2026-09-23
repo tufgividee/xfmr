@@ -4,19 +4,20 @@ from pathlib import Path
 import sacrebleu
 import train_config as cfg
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from data.multi30k.tok_wordlevel_data_build_hf.detokenizer import detokenize
 
-from exp_helper import load_exp_for_infer
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from exp_xfmr2017 import load_exp_for_infer
 
 experiment_dir = Path(__file__).resolve().parent
 project_dir = experiment_dir.parents[1]
 
 checkpoint_name = "checkpoints_eager"
-# weights_name = "weights_final.pt"
-weights_name = "weights_min_val_loss.pt"
+weights_name = "weights_final.pt"
 
 translator, config = load_exp_for_infer(
-    experiment_dir=experiment_dir,
+    experiment_dir,
     checkpoint_name=checkpoint_name,
     weights_name=weights_name,
     is_compile=False,
@@ -47,7 +48,7 @@ def evaluate_bleu(source_file, target_file,
     hypotheses = []
 
     for i, (source, reference) in enumerate(zip(sources, references)):
-        target = translator.translate(source)
+        target = detokenize(translator.translate(source))
         hypotheses.append(target)
 
         if (i + 1) % 100 == 0:

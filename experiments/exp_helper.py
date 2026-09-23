@@ -7,12 +7,12 @@ from torch import nn, optim
 from xfmr.xfmr2017.data import create_dataloader, load_tokenizer
 from xfmr.xfmr2017.inference import Translator
 from xfmr.xfmr2017.training import Trainer
-from xfmr.xfmr2017.transformer import Transformer
 
 
 def build_exp_for_train(
     experiment_dir: Path,
     config,
+    model_class,
     ):
 
     checkpoint_dir = experiment_dir / (
@@ -70,8 +70,7 @@ def build_exp_for_train(
         "cuda" if torch.cuda.is_available() else "cpu"
     )
 
-    # Model
-    model = Transformer(
+    model = model_class(
         src_vocab_size,
         tgt_vocab_size,
         config["d_model"],
@@ -124,9 +123,10 @@ def build_exp_for_train(
 
 def load_exp_for_infer(
     experiment_dir: Path,
-    checkpoint_name: str = "checkpoints_compile",
-    weights_name: str = "weights_final.pt",
-    is_compile: bool = True,
+    checkpoint_name: str,
+    weights_name: str,
+    is_compile: bool,
+    model_class,
     ):
 
     checkpoint_dir = experiment_dir / checkpoint_name
@@ -141,7 +141,7 @@ def load_exp_for_infer(
         "cuda" if torch.cuda.is_available() else "cpu"
     )
 
-    model = Transformer(
+    model = model_class(
         config["src_vocab_size"],
         config["tgt_vocab_size"],
         config["d_model"],

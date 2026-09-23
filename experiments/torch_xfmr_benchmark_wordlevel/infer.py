@@ -5,9 +5,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from data.multi30k.tok_wordlevel_data_build_hf.detokenizer import detokenize
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from benchmark_xfmr import TorchTransformer
 from exp_helper import load_exp_for_infer
-
-from xfmr.xfmr2017.transformer import Transformer
 
 experiment_dir = Path(__file__).resolve().parent
 
@@ -16,7 +15,7 @@ translator, config = load_exp_for_infer(
     checkpoint_name="checkpoints_eager",
     weights_name="weights_final.pt",
     is_compile=False,
-    model_class=Transformer,
+    model_class=TorchTransformer,
 )
 
 prompt = "Two young, White males are outside near many bushes."

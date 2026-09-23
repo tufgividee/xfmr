@@ -5,13 +5,15 @@ import train_config as cfg
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from exp_xfmr2017 import build_exp_for_train
+from benchmark_xfmr import TorchTransformer
+from exp_helper import build_exp_for_train
 
 experiment_dir = Path(__file__).resolve().parent
 
 trainer, config = build_exp_for_train(
-    experiment_dir,
-    cfg.CONFIG,
+    experiment_dir=experiment_dir,
+    config=cfg.CONFIG,
+    model_class=TorchTransformer,
 )
 
 trainer.fit(epochs=cfg.CONFIG["epochs"])

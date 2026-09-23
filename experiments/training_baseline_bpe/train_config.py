@@ -1,6 +1,7 @@
 CONFIG = {
     # Execution
     "is_compile": False,
+    "model": "xfmr2017",
 
     # Data
     "data_dir": "data/multi30k/tok_bpe_data_build",

@@ -29,6 +29,7 @@ def setup_tokenizer() -> Tokenizer:
     tokenizer.pre_tokenizer = Whitespace()
     # tokenizer.decoder = BPEDecoder(suffix="##")
     tokenizer.decoder = WordPiece(prefix="##")
+    # strickly we are not using BPE but a hybrid for now
     return tokenizer
 
 
@@ -62,7 +63,7 @@ def make_tokenizer() -> Tokenizer:
         vocab_size=8000,
         min_frequency=2,
         continuing_subword_prefix="##",
-    )
+    ) # strickly we are not using BPE but a hybrid for now
 
     print("Training shared BPE vocabulary on train.en + train.de...")
 
