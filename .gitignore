@@ -27,5 +27,6 @@ checkpoints_eager/
 .vscode/
 .idea/
 
+papers/
 notes.md
 notebooks/
