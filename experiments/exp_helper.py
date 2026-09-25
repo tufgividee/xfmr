@@ -179,3 +179,34 @@ def load_exp_for_infer(
     )
 
     return translator, config
+
+
+# from transformers import get_linear_schedule_with_warmup
+
+# # Setup parameters
+# num_epochs = 10
+# total_steps = len(train_loader) * num_epochs
+# warmup_steps = int(total_steps * 0.1)  # 10% warmup
+
+# optimizer = build_bert_optimizer(model, lr=1e-4, weight_decay=0.01)
+
+# scheduler = get_linear_schedule_with_warmup(
+#     optimizer,
+#     num_warmup_steps=warmup_steps,
+#     num_training_steps=total_steps,
+# )
+
+# trainer = Trainer(
+#     model=model,
+#     train_loader=train_loader,
+#     val_loader=val_loader,
+#     mlm_criterion=nn.CrossEntropyLoss(ignore_index=-100),
+#     nsp_criterion=nn.CrossEntropyLoss(),
+#     optimizer=optimizer,
+#     scheduler=scheduler,
+#     checkpoint_dir="./checkpoints_bert",
+#     config={"torch_compile": True, "batch_size": 32},
+#     amp_dtype=torch.bfloat16,  # Use torch.bfloat16 or torch.float16
+# )
+
+# trainer.fit(epochs=num_epochs)

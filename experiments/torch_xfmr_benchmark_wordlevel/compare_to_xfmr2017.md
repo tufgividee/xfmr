@@ -1,21 +1,33 @@
-| Component                         | Your custom Transformer | PyTorch `nn.Transformer`     |
-| --------------------------------- | ----------------------- | ---------------------------- |
-| Encoder/decoder layers            | 6 / 6                   | 6 / 6                        |
-| `d_model`                         | 512                     | 512                          |
-| Heads                             | 8                       | 8                            |
-| FFN                               | 512 → 2048 → 512        | Same                         |
-| FFN activation                    | ReLU                    | ReLU                         |
-| Attention scaling                 | `1/√d_k`                | `1/√d_k`                     |
-| Post-LN                           | **Yes**                 | **Yes** (`norm_first=False`) |
-| Embedding √d scaling              | **Yes**                 | **Yes**                      |
-| Positional encoding               | Same implementation     | Same implementation          |
-| Input embedding dropout           | 0.1                     | 0.1                          |
-| Sublayer/residual dropout         | 0.1                     | 0.1                          |
-| **Attention probability dropout** | **No**                  | **Yes, 0.1**                 |
-| **Final encoder LayerNorm**       | **No**                  | **Yes**                      |
-| **Final decoder LayerNorm**       | **No**                  | **Yes**                      |
-| Padding masks                     | Same semantics          | Same semantics               |
-| Causal target mask                | Same semantics          | Same semantics               |
-| Decoder cross-attention           | Yes                     | Yes                          |
-| Output weight tying               | **Yes**                 | **Yes**                      |
-| Output projection bias            | Yes                     | Yes                          |
+
+
+Yes. If you mean **relative to your custom model = 100%**, your results look like this:
+
+| Metric              |  Custom | PyTorch | PyTorch relative |
+| ------------------- | ------: | ------: | ---------------: |
+| **Train BLEU**      |   94.66 |   92.71 |       **97.94%** |
+| **Validation BLEU** |   23.82 |   19.37 |       **81.32%** |
+| **Test BLEU**       |   24.26 |   20.25 |       **83.47%** |
+| **Peak GPU memory** | 1675 MB | 1884 MB |      **112.48%** |
+| **Avg epoch**       |    90 s |    96 s |      **106.67%** |
+
+Or, looking at **your model relative to PyTorch**:
+
+* **Train BLEU:** 2.10% higher
+* **Validation BLEU:** 22.87% higher
+* **Test BLEU:** 19.80% higher
+* **GPU memory:** **11.09% lower**
+* **Epoch time:** **6.25% faster**
+
+And yes — **this is strong evidence that your implementation is actually working.** The particularly useful signal is that the advantage isn't only on training BLEU; it carries through to **validation and test**.
+
+I would now treat the custom Transformer as a **valid working 2017 Transformer implementation**, and move on to understanding *why* the runtime characteristics differ rather than questioning whether the implementation works.
+
+
+BLEU comparison
+
+Your custom Transformer versus the PyTorch nn.Transformer benchmark.
+
+metric	custom	pytorch
+Train	94.66	92.71
+Validation	23.82	19.37
+Test	24.26	20.25

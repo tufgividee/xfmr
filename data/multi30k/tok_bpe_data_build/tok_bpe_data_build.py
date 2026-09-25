@@ -2,7 +2,7 @@ from pathlib import Path
 
 import torch
 from tokenizers import Tokenizer
-from tokenizers.decoders import BPEDecoder, WordPiece
+from tokenizers.decoders import WordPiece
 from tokenizers.models import BPE
 from tokenizers.normalizers import Lowercase
 from tokenizers.pre_tokenizers import Whitespace
